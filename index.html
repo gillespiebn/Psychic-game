@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Psychic Game</title>
+	
+</head>
+<body>
+<h1>Psychic Game</h1>
+<p>Guess what letter I am thinking of</p>
+<p>Press any key to start guessing</p>
+<br>
+<p>Wins:<span id="wins"></span></p>
+<br>
+<p>Losses: <span id="losses"></span></p>
+<br>
+<p>Guesses Left: <span id="guesses"></span></p>
+<br>
+<p>Your guesses so far: <span id="guessedLetters"></span></p>
+<br>
+<br>
+<p><h3 id="status"></h3></p>
+</body>
+
+
+<script>
+	
+//vars
+
+var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+var computerPick;
+var playerGuess;
+var wins = 0;
+var losses = 0;
+var guesses = 10;
+var guessedLetters = [];
+
+
+
+
+function winLossGuess() {
+	document.querySelector('#wins').innerHTML = string;
+	document.querySelector('#losses').innerHTML = string;
+	document.querySelector('#guesses').innerHTML = string;
+}
+
+
+// Computer picks random letter
+
+function compLetter() {
+	var randNum = Math.floor(Math.random() * 26 );
+	computerPick = letters[randNum];
+	return computerPick;
+	console.log(computerPick);
+}
+
+
+function resetGuessedLetters() {
+	guessedLetters.length = 0;
+	return guessedLetters.length;
+}
+
+function resetGuesses() {
+	guesses = 10;
+	return guesses;
+} 
+
+function newGame() {
+	resetGuessedLetters();
+	resetGuesses();
+	compLetter();
+}
+
+function compare () {
+	if (guessedLetters.indexOf(playerGuess) != -1)
+		return;
+}
+
+
+
+document.onkeyup = function(event) {
+	winLossGuess();
+	playerGuess = String.fromCharCode(event.keyCode).toLowerCase();
+	var pickedKey = event.keyCode;
+	playerGuess = pickedKey;
+	console.log(playerGuess)
+
+	if (playerGuess == computerPick) {
+		console.log("YOU WIN!")
+		wins = wins++
+		console.log(wins)
+		document.querySelector('#status').innerHTML = "Wow, you're psychic!";
+		guesses = 10;
+		guessedLetters = []
+		compLetter();
+		console.log("new pick" + " " + computerPick)
+	}
+
+	else if (guessedLetters.indexOf(playerGuess) >= 0) {
+		document.querySelector('#status').innerHTML = "You've already guessed that letter. Try another letter.";
+	}
+
+	else {
+		document.querySelector('#status').innerHTML = "Guess again!";
+		guesses = guesses--
+		guessedLetters.push(pickedKey);
+		Guesses.textContent = lettersGuessed.join(", ");
+		console.log(guessedLetters)
+			if (guesses <= 0) {
+				losses = losses++
+				guesses = 10
+				guessedLetters = []
+				compLetter();
+				console.log("new pick" + " " + computerPick)
+				document.querySelector('#status').innerHTML = 'You lose!';
+			}
+	}
+}
+
+
+
+
+
+</script>
+</html>
